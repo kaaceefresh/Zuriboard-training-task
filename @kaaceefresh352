@@ -1,0 +1,215 @@
+￼
+play_arrow
+RUN
+1
+import 'dart:math';
+2
+import 'package:flutter/material.dart';
+3
+​
+4
+​
+5
+class DiscData {
+6
+  static final _rng = Random();
+7
+​
+8
+  final double size;
+9
+  final Color color;
+10
+  final Alignment alignment;
+11
+​
+12
+  DiscData()
+13
+      : size = _rng.nextDouble() * 40 + 10,
+14
+        color = Color.fromARGB(
+15
+          _rng.nextInt(200),
+16
+          _rng.nextInt(255),
+17
+          _rng.nextInt(255),
+18
+          _rng.nextInt(255),
+19
+        ),
+20
+        alignment = Alignment(
+21
+          _rng.nextDouble() * 2 - 1,
+22
+          _rng.nextDouble() * 2 - 1,
+23
+        );
+24
+}
+25
+​
+26
+void main() async {
+27
+  runApp(
+28
+    MaterialApp(
+29
+      debugShowCheckedModeBanner: false,
+30
+      home: Scaffold(
+31
+        body: Container(
+32
+          color: Color(0xFF15202D),
+33
+          child: SizedBox.expand(
+34
+            child: VariousDiscs(50),
+35
+          ),
+36
+        ),
+37
+      ),
+38
+    ),
+39
+  );
+40
+}
+41
+​
+42
+class VariousDiscs extends StatefulWidget {
+43
+  final int numberOfDiscs;
+44
+​
+45
+  VariousDiscs(this.numberOfDiscs);
+46
+​
+47
+  @override
+48
+  _VariousDiscsState createState() => _VariousDiscsState();
+49
+}
+50
+​
+51
+class _VariousDiscsState extends State<VariousDiscs> {
+52
+  final _discs = <DiscData>[];
+53
+​
+54
+  @override
+55
+  void initState() {
+56
+    super.initState();
+57
+    _makeDiscs();
+58
+  }
+59
+​
+60
+  void _makeDiscs() {
+61
+    _discs.clear();
+62
+    for (int i = 0; i < widget.numberOfDiscs; i++) {
+63
+      _discs.add(DiscData());
+64
+    }
+65
+  }
+66
+​
+67
+  @override
+68
+  Widget build(BuildContext context) {
+69
+    return GestureDetector(
+70
+      onTap: () => setState(() {
+71
+        _makeDiscs();
+72
+      }),
+73
+      child: Stack(
+74
+        children: [
+75
+          Center(
+76
+            child: Text(
+77
+              'I am Kelechi Nwachukwu, a Mobile Intern with Zuriboard, sponsored by Ingressive4Good.',
+78
+              style: TextStyle(color: Colors.white, fontSize: 50),
+79
+            ),
+80
+          ),
+81
+          for (final disc in _discs)
+82
+            Positioned.fill(
+83
+              child: AnimatedAlign(
+84
+                duration: Duration(milliseconds: 500),
+85
+                curve: Curves.easeInOut,
+86
+                alignment: disc.alignment,
+87
+                child: AnimatedContainer(
+88
+                  duration: Duration(milliseconds: 500),
+89
+                  decoration: BoxDecoration(
+90
+                    color: disc.color,
+91
+                    shape: BoxShape.circle,
+92
+                  ),
+93
+                  height: disc.size,
+94
+                  width: disc.size,
+95
+                ),
+96
+              ),
+97
+            ),
+98
+        ],
+99
+      ),
+100
+    );
+101
+  }
+102
+}
+103
+​
+￼ Console￼Documentation
+￼
+Privacy notice Send feedback
+￼ Null Safety
+no issues
+Based on Flutter 2.0.6 Dart SDK 2.12.3
